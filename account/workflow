@@ -1,0 +1,81 @@
+Landing page (describe the app and other stuff about the software, might inlcude pricing packages in the future. includes testimonies, and other linmks like faqs, about, and so on) -> page has links(registration and login page) -> registration(requires admin to create organization), login(staff picks organization with logo from dropdown during signin, staffs gets invite from admin to be able to create an account on the app). the admin should have a different account view to be able to disable users or change comoany names, logo, address,and other informarion details.
+after login, there shoukd be subdomain like company.myapp.com. but how can i avoid similar company names so it dont be an issue
+
+1. Landing Page (Public)
+URL: myapp.com/
+
+Contents:
+
+Hero section: Introduce the app ("Modern Shelter Management Platform for Organizations")
+
+Feature sections: Cases, Rounds, Client Count, AI-based Alerts, etc.
+
+Testimonials (later)
+
+Pricing Packages (later)
+
+Links to FAQ, About, Contact.
+
+Registration link → (Admins can register organizations)
+
+2. Registration (Admin Only)
+URL: myapp.com/register/
+
+Admin creates:
+
+Organization Name
+
+Organization Logo
+
+Address, City, State
+
+Admin Email/Password
+
+System creates:
+
+Unique "slug" for organization. (more below)
+
+Example:
+If Palace Shelter registers, the system creates palace-shelter, so the dashboard becomes:
+👉 myapp.com/palace-shelter/
+
+3. Login (Staffs and Admins)
+URL: myapp.com/login/
+
+Login form:
+
+Email
+
+Password
+
+Pick organization from dropdown (with logo)
+
+4. Staff Invitation System
+Admins can invite staff by:
+
+Sending invite via email
+
+Only invited staff can register for an organization
+
+Staff accounts are linked to their organization
+
+5. After Login
+Dynamic URL depending on organization:
+👉 myapp.com/{organization-slug}/
+
+Sidebar (always present):
+
+Dashboard (shift info + building switcher)
+
+Cases (clients/families)
+
+Rounds (hourly checks)
+
+Client Count (12am headcounts)
+
+Client Passes (outpasses)
+
+Shift Reports (automatic generation)
+
+Admin Panel (only for admins)
+
