@@ -1,0 +1,16 @@
+<!--register.html-->
+
+<h1>Complete Your Registration</h1>
+<h2>Set your password</h2>
+<form method="POST">
+    {% csrf_token %}
+    {% if errors %}
+        <ul>
+            {% for error in errors %}
+                <li style="color: red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <input type="password" name="password" placeholder="New password" required>
+    <button type="submit">Register</button>
+</form>

@@ -1,0 +1,7 @@
+<!-- filepath: /Users/oluwaseyi/Desktop/palace_dashboard/account/templates/account/revoke_access.html -->
+<h1>Revoke Access for {{ user.email }}</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to revoke access for this user?</p>
+    <button type="submit">Yes, Revoke Access</button>
+</form>

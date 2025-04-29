@@ -1,0 +1,13 @@
+<!-- filepath: /Users/oluwaseyi/Desktop/palace_dashboard/account/templates/account/assign_role.html -->
+<h1>Assign Role to {{ user.email }}</h1>
+<form method="POST">
+    {% csrf_token %}
+    <label for="role">Select Role for {{ user.email }}:</label>
+    <select name="role" id="role" required>
+        <option value="">Choose a role</option>
+        <option value="admin">Admin</option>
+        <option value="supervisor">Supervisor</option>
+        <option value="residential aide">Residential Aide</option>
+    </select>
+    <button type="submit">Assign Role</button>
+</form>

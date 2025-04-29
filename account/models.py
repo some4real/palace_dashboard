@@ -10,6 +10,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Organization(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    code = models.CharField(max_length=10, unique=True, null=True, blank=True)
     slug = models.SlugField(unique=True, blank=True, editable=False)
 
     #logo = models.ImageField(upload_to='logos/', null=True, blank=True)
@@ -85,7 +86,7 @@ class CustomUser(AbstractUser):
         ('residential aide', 'Residential Aide'),
     ], default='residential aide')
     is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_admin_field = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['organization']
@@ -97,6 +98,22 @@ class CustomUser(AbstractUser):
             self.email = self.email.lower()
         super().save(*args, **kwargs)
 
+    def is_admin(self):
+        return self.role == 'admin'
+
+    def is_supervisor(self):
+        return self.role == 'supervisor'
+
+    def is_residential_aide(self):
+        return self.role == 'residential_aide'
+
     def __str__(self):
         return self.email
+
+    class Meta:
+        permissions = [
+            ("can_assign_roles", "Can assign roles to users"),
+            ("can_revoke_access", "Can revoke user access"),
+            ("can_delete_client_data", "Can delete client data"),
+        ]
 

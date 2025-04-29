@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,10 +43,10 @@ INSTALLED_APPS = [
 
     # Local apps
     'shelter.apps.ShelterConfig',
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
 
     # Third-party apps
-    'fernet_fields',
+    'encrypted_model_fields',
     
 ]
 
@@ -62,7 +65,7 @@ ROOT_URLCONF = 'palace_dashboard.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -132,3 +135,9 @@ STATICFILES_DIRS = [BASE_DIR / 'shelter/static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.CustomUser'
+FIELD_ENCRYPTION_KEY = config("FIELD_ENCRYPTION_KEY")
+
+LOGIN_URL = '/account/login/'  # Redirects unauthenticated users to this URL
+LOGIN_REDIRECT_URL = '/'  # Redirects authenticated users after login
+LOGOUT_REDIRECT_URL = '/account/login/'  # Redirects users after logout
+

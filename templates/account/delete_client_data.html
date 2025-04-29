@@ -1,0 +1,7 @@
+<!-- filepath: /Users/oluwaseyi/Desktop/palace_dashboard/shelter/templates/shelter/delete_client_data.html -->
+<h1>Delete Client Data</h1>
+<p>Are you sure you want to delete data for {{ client.name }}?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+</form>
