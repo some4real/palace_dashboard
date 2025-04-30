@@ -1,1 +1,1 @@
-# palace_dashboard
+# gida
