@@ -1,7 +1,24 @@
-<!-- filepath: /Users/oluwaseyi/Desktop/palace_dashboard/account/templates/account/revoke_access.html -->
-<h1>Revoke Access for {{ user.email }}</h1>
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to revoke access for this user?</p>
-    <button type="submit">Yes, Revoke Access</button>
-</form>
+{% include 'shelter/base.html' %}
+{% include 'shelter/dashboard_sidebar.html' %}
+{% load static %}
+
+<div class="ml-64 min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex items-center justify-center px-4">
+  <div class="bg-white shadow-xl rounded-2xl p-8 max-w-md w-full text-center">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mx-auto text-yellow-500 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-1.414 1.414a9 9 0 11-1.414-1.414L18.364 5.636z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0h.01m-.01 0h-.01" />
+    </svg>
+    <h2 class="text-xl font-bold text-gray-800 mb-2">Revoke Staff Access</h2>
+    <p class="text-gray-600 mb-6">This will disable access for <strong>{{ user.email }}</strong> without deleting their data. Continue?</p>
+
+    <form method="post" class="space-y-3">
+      {% csrf_token %}
+      <button type="submit" class="w-full py-2 px-4 bg-yellow-500 hover:bg-yellow-600 text-white rounded-md font-semibold transition">
+        Revoke Access
+      </button>
+      <a href="{% url 'staff_list' %}" class="w-full inline-block py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 text-gray-700 transition">
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>

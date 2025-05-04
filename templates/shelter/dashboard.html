@@ -1,6 +1,124 @@
-{% extends "shelter/base.html" %}
+{% include 'shelter/base.html' %}
+{% include 'shelter/dashboard_sidebar.html' %}
+{% load static %}
 
-{% block content %}
-<h1 class="mb-4">Dashboard Overview</h1>
-<p>We'll build sections from the blueprint here as you go!</p>
-{% endblock %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+
+<!-- Main Content -->
+<div class="flex-1 ml-64 overflow-y-auto bg-gradient-to-br from-gray-50 via-white to-gray-100 min-h-screen">
+
+  <!-- Top Bar -->
+  <header class="backdrop-blur-sm bg-white/80 sticky top-0 z-20 shadow-sm p-4 flex justify-between items-center border-b border-gray-200">
+    <div class="flex items-center gap-4">
+      <img src="{% if org.logo %}{{ org.logo.url }}{% else %}https://res.cloudinary.com/dlhvy3thk/image/upload/v1746075089/logo-placeholder-image_i8iizd.png{% endif %}" 
+           alt="Logo" class="h-10 w-10 rounded-md shadow-md object-contain bg-white border border-gray-300">
+      <h1 class="text-2xl font-bold text-gray-800">{{ org.name }}</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <span class="text-gray-600 font-medium hidden sm:inline">{{ greeting }}, {{ request.user.name }}</span>
+      <a href="{% url 'profile' %}" class="relative block w-10 h-10 rounded-full border-2 border-primary overflow-hidden shadow">
+        <img src="{% if user.photo %}{{ user.photo.url }}{% else %}https://res.cloudinary.com/dlhvy3thk/image/upload/t_default/coodomqszlct7aqwxtcn.jpg{% endif %}" 
+             alt="{{ user.name }}" class="w-full h-full object-cover" />
+      </a>
+    </div>
+  </header>
+
+  {% if request.user.is_admin %}
+  <!-- Admin Buttons -->
+  <section class="px-6 pt-6">
+    <div class="flex flex-wrap gap-4 mb-6">
+      <a href="{% url 'assign_role' user.id %}" 
+         class="btn-primary bg-white border border-indigo-600 text-indigo-600 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-600 hover:text-white hover:font-bold transition">
+        Invite Staff
+      </a>
+      <a href="{% url 'manage_roles' %}" 
+         class="btn-primary bg-white border border-indigo-600 text-indigo-600 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-600 hover:text-white hover:font-bold transition">
+        Manage Roles
+      </a>
+      <a href="{% url 'organization_setting' %}" 
+         class="btn-primary bg-white border border-indigo-600 text-indigo-600 font-semibold px-4 py-2 rounded-lg hover:bg-indigo-600 hover:text-white hover:font-bold transition">
+        Organization Settings
+      </a>
+    </div>
+
+    <!-- Manage Staff Table -->
+    <div class="bg-white rounded-xl shadow p-6">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Manage Users</h2>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead class="bg-gray-50 text-gray-600 uppercase">
+            <tr>
+              <th class="p-3">Name</th>
+              <th class="p-3">Email</th>
+              <th class="p-3">Role</th>
+              <th class="p-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            {% for user in page_obj %}
+            <tr class="hover:bg-gray-50 transition">
+              <td class="p-3">{{ user.name }}</td>
+              <td class="p-3">{{ user.email }}</td>
+              <td class="p-3 capitalize">{{ user.role }}</td>
+              <td class="p-3 text-center space-x-2">
+                <a href="{% url 'reassign_role' user.id %}" class="text-indigo-600 hover:underline">Reassign</a>
+                <a href="{% url 'revoke_access' user.id %}" class="text-red-600 hover:underline">Revoke</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="4" class="text-center py-4 text-gray-500">No users found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-6 flex justify-center space-x-2">
+        {% if page_obj.has_previous %}
+          <a href="?page=1" class="btn-outline">First</a>
+          <a href="?page={{ page_obj.previous_page_number }}" class="btn-outline">Previous</a>
+        {% endif %}
+        <span class="px-4 py-2 text-gray-700 bg-gray-100 rounded">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="btn-outline">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-outline">Last</a>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <!-- Dashboard Cards -->
+  <section class="px-6 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Total Clients</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ total_clients }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Families</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ total_families }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Shifts Today</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ shifts_today }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Reports Logged</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ total_reports }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Active Passes</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ active_passes }}</p>
+    </div>
+    <div class="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition">
+      <h4 class="text-gray-600 font-medium text-sm uppercase tracking-wide">Rounds Completed</h4>
+      <p class="text-4xl font-bold text-indigo-600 mt-2">{{ rounds_today }}</p>
+    </div>
+  </section>
+
+</div>

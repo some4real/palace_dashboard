@@ -1,0 +1,180 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    font-size: 14px;
+    margin: 0;
+    padding-top: 56px; /* Add padding equal to the height of the navbar */
+    width: 100%;
+    position: relative;
+    min-height: 100vh;
+}
+
+.greenline:after {
+    content: " ";
+    margin-left: 20px;
+    border-bottom: solid 3px #3B964B;
+    display: inline-block;
+    width: 15%;
+}
+
+.blueline > div {
+    display: inline-block !important;
+}
+
+.blueline:after {
+    content: " ";
+    margin-left: 20px;
+    border-bottom: solid 3px #A7D7FF;
+    display: inline-block;
+    width: 15%;
+}
+
+/* Example form/input styles */
+.gform_wrapper.gravity-theme input,
+.gform_wrapper.gravity-theme select,
+.gform_wrapper.gravity-theme textarea {
+    font-size: 16px !important;
+    padding: 20px 15px !important;
+    height: auto !important;
+    border-radius: 4px !important;
+}
+
+#partner-form .gform_button {
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#blog-sidebar h5, #blog-sidebar h2.gform_title {
+    font-size: 26px;
+}
+
+#blog-sidebar li {
+    list-style: none !important;
+}
+
+#comments .comments-title {
+    padding: 0 0 20px 0;
+    border-bottom: solid 1px #dbdddf;
+    margin-bottom: 30px;
+}
+
+.post-password-form {
+    padding: 160px 0;
+}
+
+.btn-primary {
+  background-color: #4f46e5; /* indigo-600 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca; /* indigo-700 */
+}
+
+.btn-secondary {
+  background-color: #e5e7eb; /* gray-200 */
+  color: #1f2937; /* gray-800 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+}
+
+.btn-secondary:hover {
+  background-color: #d1d5db; /* gray-300 */
+}
+
+.btn-outline {
+  border: 1px solid #d1d5db; /* gray-300 */
+  color: #374151; /* gray-700 */
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  background-color: transparent;
+}
+
+.btn-outline:hover {
+  background-color: #f3f4f6; /* gray-100 */
+}
+
+/* General Mobile Styles */
+@media (max-width: 768px) {
+  /* Main Content */
+  .flex-1 {
+    margin-left: 0; /* Remove sidebar margin */
+  }
+
+  /* Top Bar */
+  header {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    gap: 1rem; /* Add spacing between items */
+  }
+
+  header .flex.items-center {
+    flex-direction: column; /* Stack logo and organization name */
+    align-items: center; /* Center align logo and text */
+  }
+
+  header h1 {
+    font-size: 1.5rem; /* Reduce font size for organization name */
+  }
+
+  header a {
+    margin-top: 0.5rem; /* Add spacing for the profile image */
+  }
+
+  /* Admin Buttons */
+  .flex.flex-wrap.gap-4.mb-6 {
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 1rem; /* Add spacing between buttons */
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%; /* Make buttons full-width */
+    text-align: center; /* Center-align button text */
+  }
+
+  /* Manage Users Table */
+  .overflow-x-auto {
+    overflow-x: scroll; /* Enable horizontal scrolling for tables */
+  }
+
+  table {
+    font-size: 0.875rem; /* Reduce table font size */
+  }
+
+  table th, table td {
+    padding: 0.5rem; /* Reduce padding for table cells */
+  }
+
+  /* Pagination */
+  .mt-6.flex.justify-center.space-x-2 {
+    flex-wrap: wrap; /* Wrap pagination controls */
+    gap: 0.5rem; /* Add spacing between controls */
+  }
+
+  /* Dashboard Cards */
+  .grid {
+    grid-template-columns: 1fr; /* Single column layout for cards */
+    gap: 1rem; /* Add spacing between cards */
+  }
+
+  .bg-white.rounded-2xl {
+    padding: 1rem; /* Reduce padding for cards */
+  }
+
+  .bg-white.rounded-2xl h4 {
+    font-size: 0.875rem; /* Reduce font size for card titles */
+  }
+
+  .bg-white.rounded-2xl p {
+    font-size: 2rem; /* Reduce font size for card numbers */
+  }
+}

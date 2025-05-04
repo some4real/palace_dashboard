@@ -1,0 +1,70 @@
+<!-- shelter/templates/shelter/dashboard_sidebar.html -->
+
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-100">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gida Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#2563EB',
+              secondary: '#1E293B',
+            },
+          },
+        },
+      };
+    </script>
+    <link rel="icon" href="https://res.cloudinary.com/dlhvy3thk/image/upload/e_background_removal/c_pad,w_48,h_48,f_png,e_improve,e_sharpen/v1746023150/Untitled_design_7_oejd5n.png" />
+  </head>
+  <body class="h-full">
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden fixed top-4 left-4 z-50">
+      <button id="mobile-menu-btn" class="text-white bg-primary p-2 rounded-md focus:outline-none">
+        ☰
+      </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg flex flex-col transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
+      <div class="p-6 border-b">
+        <a href="{% url 'index' %}">
+          <img src="https://res.cloudinary.com/dlhvy3thk/image/upload/e_background_removal/c_pad,w_160,h_160,f_png/v1746023150/Untitled_design_7_oejd5n.png" alt="Logo" class="h-20 mx-auto">
+        </a>
+      </div>
+      <nav class="flex-1 p-4 space-y-3 overflow-y-auto">
+        <a href="{% url 'dashboard' %}" class="block px-4 py-2 rounded-lg bg-primary text-white hover:bg-indigo-700">Dashboard</a>
+        <a href="{% url 'client_list' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Clients</a>
+        <a href="{% url 'staff_list'%}" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Staffs</a>
+        <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Shifts</a>
+        <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Reports</a>
+        <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Passes</a>
+        <a href="#" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Rounds</a>
+        <a href="{% url 'logout' %}" class="block px-4 py-2 rounded-lg hover:bg-gray-200">Logout</a>
+      </nav>
+    </div>
+
+    <!-- Overlay for Mobile -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-30"></div>
+
+    <script>
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const menuBtn = document.getElementById('mobile-menu-btn');
+
+      menuBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+        overlay.classList.toggle('hidden');
+      });
+
+      overlay.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full');
+        overlay.classList.add('hidden');
+      });
+    </script>
+  </body>
+</html>

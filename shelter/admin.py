@@ -10,8 +10,8 @@ admin.site.register(Organization)
 admin.site.register(Building)
 
 class ClientAdmin(admin.ModelAdmin):
-    exclude = ('organization',)  # Hide organization from form
-    list_display = ('first_name', 'last_name', 'family', 'organization', 'building')
+    #exclude = ('organization',)  # Hide organization from form
+    list_display = ('first_name', 'last_name', 'family', 'organization', 'building', 'case_id')
     list_filter = ('organization', 'building', 'family')
     def save_model(self, request, obj, form, change):
         if not obj.organization and hasattr(request.user, 'organization'):

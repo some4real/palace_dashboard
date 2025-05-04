@@ -1,23 +1,56 @@
 <!-- shelter/templates/shelter/base.html -->
-
 {% load static %}
-{% include "shelter/navbar.html" %}
-
 
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Palace Shelter</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{% static 'shelter/style.css' %}">
-</head>
-<body>
+    <script src="{% static 'js/script.js' %}"></script>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <title>{% block title %}Gida{% endblock %}</title>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    {% if messages %}
+<div id="message-container" class="fixed top-4 right-4 z-50">
+  {% for message in messages %}
+  <div class="mb-4 px-4 py-3 rounded-lg shadow-lg 
+              {% if message.tags == 'success' %}bg-green-100 text-green-800{% elif message.tags == 'error' %}bg-red-100 text-red-800{% endif %}">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+<script>
+  // Automatically hide the message container after 5 seconds
+  setTimeout(() => {
+    const messageContainer = document.getElementById('message-container');
+    if (messageContainer) {
+      messageContainer.style.transition = 'opacity 0.2s ease';
+      messageContainer.style.opacity = '0';
+      setTimeout(() => messageContainer.remove(), 500); // Remove the element after fade-out
+    }
+  }, 5000); // 5 seconds
+</script>
+{% endif %}
+    
+    <script>
+      let timeout;
+      const warningTime = 400000; 
+      const logoutTime = 600000; 
+
+      function resetTimer() {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => {
+          alert('You will be logged out due to inactivity.');
+          setTimeout(() => {
+            window.location.href = "{% url 'logout' %}";
+          }, 60000); // Redirect after 1 minute
+        }, warningTime);
+      }
+
+      window.onload = resetTimer;
+      document.onmousemove = resetTimer;
+      document.onkeypress = resetTimer;
+    </script>
+  </head>
 </html>

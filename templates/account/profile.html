@@ -1,0 +1,74 @@
+{% load static %}
+{% include 'shelter/dashboard_sidebar.html' %}
+
+<div class="flex-1 ml-64 flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-100 to-white p-6">
+  <div class="w-full max-w-3xl bg-white p-10 rounded-xl shadow-xl border border-gray-200">
+    
+    <!-- Profile Header -->
+    <div class="text-center mb-10">
+      <h2 class="text-3xl font-bold text-gray-800">Your Profile</h2>
+      <p class="text-gray-500 mt-2">Manage your account details and personal information.</p>
+    </div>
+
+    <!-- Avatar -->
+    <div class="flex justify-center mb-8">
+      <div class="relative">
+        <img src="{% if user.photo %}{{ user.photo.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" 
+             alt="User Photo" 
+             class="w-28 h-28 rounded-full object-cover border-4 border-primary shadow-md">
+      </div>
+    </div>
+
+    <!-- Profile Form -->
+    <form method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {% csrf_token %}
+      
+      <div class="col-span-1 md:col-span-2">
+        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+        <input type="text" name="name" id="name" value="{{ user.name }}" 
+               class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+               placeholder="John Doe">
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+        <input type="email" name="email" id="email" value="{{ user.email }}" 
+               class="mt-1 w-full px-4 py-3 border border-gray-200 bg-gray-100 rounded-lg text-gray-500 cursor-not-allowed" readonly>
+      </div>
+
+      <div>
+        <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+        <input type="text" name="phone_number" id="phone_number" value="{{ user.phone_number }}" 
+               class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+               placeholder="+1 555 123 4567">
+      </div>
+
+      <!-- Display User Role -->
+      <div>
+        <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+        <input type="text" name="role" id="role" value="{{ user.role }}" 
+               class="mt-1 w-full px-4 py-3 border border-gray-200 bg-gray-100 rounded-lg text-gray-500 cursor-not-allowed" readonly>
+      </div>
+
+      <div class="col-span-1 md:col-span-2">
+        <label for="photo" class="block text-sm font-medium text-gray-700">Update Profile Photo</label>
+        <input type="file" name="photo" id="photo" 
+               class="mt-1 w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-white file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-white hover:file:bg-indigo-700">
+      </div>
+
+      <!-- Submit Button -->
+      <div class="col-span-1 md:col-span-2 text-center mt-6">
+        <button type="submit" class="btn-primary w-full sm:w-auto">
+          Save Changes
+        </button>
+      </div>
+    <!-- Divider -->
+    <div class="border-t mt-10 pt-6 text-center">
+      <a href="{% url 'dashboard' %}"
+         class="text-sm text-gray-600 hover:text-gray-800 transition font-medium">
+        ← Back to Dashboard
+      </a>
+    </div>
+  </form>
+  </div>
+</div>

@@ -7,15 +7,15 @@ from django.core.exceptions import ValidationError
 
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import gettext_lazy as _
+from cloudinary.models import CloudinaryField
 
 class Organization(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     code = models.CharField(max_length=10, unique=True, null=True, blank=True)
     slug = models.SlugField(unique=True, blank=True, editable=False)
-
-    #logo = models.ImageField(upload_to='logos/', null=True, blank=True)
-    address = models.TextField(null=True, blank=True)
-
+    logo = CloudinaryField(
+        'logo', null=True, blank=True, default='https://res.cloudinary.com/dlhvy3thk/image/upload/v1746075089/logo-placeholder-image_i8iizd.png')
+    
     def save(self, *args, **kwargs):
             if not self.slug:
                 base_slug = slugify(self.name)
@@ -29,7 +29,19 @@ class Organization(models.Model):
     def __str__(self):
         return self.name
 
+class Role(models.Model):
+    name = models.CharField(max_length=50, unique=True)  # Role name
+    organization = models.ForeignKey(
+        'Organization', on_delete=models.CASCADE, related_name='roles'
+    )  # Link roles to an organization
 
+    # Enforce uniqueness within an organization
+    class Meta:
+            unique_together = ('name', 'organization')
+
+    def __str__(self):
+        return self.name
+    
 class Building(models.Model):
     name = models.CharField(max_length=255)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE, related_name='buildings')
@@ -51,28 +63,22 @@ class CustomUserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('role', 'admin')
-        extra_fields.setdefault('is_admin', True)
 
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_('Superuser must have is_staff=True.'))
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
-        if 'organization' not in extra_fields:
-            raise ValueError('Superusers must have an organization.')
-
-        # Convert organization ID to an instance
-        organization_id = extra_fields.pop('organization')
-        try:
-            extra_fields['organization'] = Organization.objects.get(id=organization_id)
-        except Organization.DoesNotExist:
-            raise ValueError(f"Organization with ID {organization_id} does not exist.")
 
         return self.create_user(email, password, **extra_fields)
 
 class CustomUser(AbstractUser):
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    name = models.CharField(max_length=255, null=True, blank=True)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
+    photo = CloudinaryField(
+        'photo', null=True, blank=True, default='https://res.cloudinary.com/dlhvy3thk/image/upload/v1720723272/coodomqszlct7aqwxtcn.jpg'
+    )
 
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, related_name='users'
@@ -80,11 +86,9 @@ class CustomUser(AbstractUser):
     building = models.ForeignKey(
         Building, on_delete=models.CASCADE, related_name='users', null=True, blank=True
     )
-    role = models.CharField(max_length=50, choices=[
-        ('admin', 'Admin'),
-        ('supervisor', 'Supervisor'),
-        ('residential aide', 'Residential Aide'),
-    ], default='residential aide')
+    role = models.ForeignKey(
+        'account.Role', on_delete=models.SET_NULL, null=True, blank=True, related_name='users'
+    )  # Link the user to a role dynamically
     is_active = models.BooleanField(default=True)
     is_admin_field = models.BooleanField(default=False)
 
@@ -99,16 +103,18 @@ class CustomUser(AbstractUser):
         super().save(*args, **kwargs)
 
     def is_admin(self):
-        return self.role == 'admin'
-
-    def is_supervisor(self):
-        return self.role == 'supervisor'
-
-    def is_residential_aide(self):
-        return self.role == 'residential_aide'
+        return self.role and self.role.name.lower() == 'admin'
 
     def __str__(self):
         return self.email
+
+    def has_module_perms(self, app_label):
+        # Only allow superusers to access the Django admin
+        return self.is_superuser
+
+    def has_perm(self, perm, obj=None):
+        # Only allow superusers to have permissions in the Django admin
+        return self.is_superuser
 
     class Meta:
         permissions = [

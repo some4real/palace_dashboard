@@ -1,0 +1,215 @@
+{% load static %}
+{% include "shelter/navbar.html" %}
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>Gida | A Shelter Management System for Multiple Organizations</title>
+  <meta name="description" content="Gida – modern shelter management for nonprofits and public sector agencies. Manage cases, rounds, headcounts, passes and reports across organizations.">
+  <link rel="canonical" href="http://127.0.0.1:8000/">
+  <link rel="icon" href="https://res.cloudinary.com/dlhvy3thk/image/upload/e_background_removal/c_pad,w_48,h_48,f_png,e_improve,e_sharpen/v1746023150/Untitled_design_7_oejd5n.png" type="image/png">
+
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type"   content="website">
+  <meta property="og:url"    content="http://127.0.0.1:8000/">
+  <meta property="og:title"  content="Gida | Shelter Management System">
+  <meta property="og:description" content="Manage cases, rounds, headcounts, passes & reports across multiple shelters.">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Gida | Shelter Management System">
+  <meta name="twitter:description" content="Manage cases, rounds, headcounts, passes & reports across multiple shelters.">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"Gida",
+    "url":"http://127.0.0.1:8000/",
+    "description":"A modern shelter management system for multiple organizations.",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"http://127.0.0.1:8000/search/?q={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="font-sans antialiased text-gray-800 bg-gray-50" style="padding-top: 6rem;">
+  <!-- HERO -->
+  <header class="bg-gray-50">
+    <div class="max-w-3xl mx-auto text-center py-20 px-4">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">A Modern Shelter Management System</p></h1>
+      <p class="text-lg text-gray-600 mb-6">Manage cases, rounds, headcounts, passes, and reports across multiple organizations—all in one platform.</p>
+      <a href="{% url 'reg_org' %}" class="inline-block bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Get Started</a>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-16 bg-white mt-20">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-indigo-600" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 12h6m-3-3v6m5-9H5a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2z"/>
+        </svg>
+        <h3 class="mt-4 text-lg font-semibold text-indigo-600">Case Management</h3>
+        <p class="mt-2 text-gray-600">Track client and family cases with notes, timelines, and status updates.</p>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-indigo-600" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10m-2 8h2a2 2 0 002-2v-5H5v5a2 2 0 002 2h2m4 0v2"/>
+        </svg>
+        <h3 class="mt-4 text-lg font-semibold text-indigo-600">Rounds</h3>
+        <p class="mt-2 text-gray-600">Log hourly room and facility checks for compliance and safety.</p>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-indigo-600" fill="none"
+             viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 3v4M3 5h4M19 3v4M17 5h4M5 17v4M3 19h4M19 17v4M17 19h4M12 7v10"/>
+        </svg>
+        <h3 class="mt-4 text-lg font-semibold text-indigo-600">Client Count</h3>
+        <p class="mt-2 text-gray-600">Automated headcounts and shift summaries every night at midnight.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="py-16 bg-gray-50 text-center">
+    <h2 class="text-3xl font-semibold greenline mb-8 inline-block">Pricing</h2>
+    <div class="max-w-md mx-auto">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <h3 class="text-2xl font-bold mb-4">Free</h3>
+        <p class="text-gray-600 mb-6">All core features at no cost</p>
+        <ul class="text-left space-y-2 mb-6">
+          <li>✅ Unlimited Organizations</li>
+          <li>✅ Case & Family Management</li>
+          <li>✅ Rounds & Headcounts</li>
+          <li>✅ Staff Invitations & Roles</li>
+          <li>✅ Automated Reports</li>
+        </ul>
+        <a href="{% url 'reg_org' %}" class="block bg-indigo-600 text-white px-6 py-3 rounded hover:bg-purple-700">Get Started — Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="py-16 bg-white">
+    <h2 class="text-3xl font-semibold blueline mb-12 text-center"><div>Testimonials</div></h2>
+    <div class="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-gray-50 p-6 rounded shadow">
+        <p class="italic text-gray-700">“Gida transformed how we track client cases—intuitive and powerful!”</p>
+        <p class="mt-4 font-semibold">— Sarah Nguyen, Admin @ HopeShelter</p>
+      </div>
+      <div class="bg-gray-50 p-6 rounded shadow">
+        <p class="italic text-gray-700">“The round-check feature keeps us compliant every hour—fantastic tool.”</p>
+        <p class="mt-4 font-semibold">— Marcus Lee, Manager @ SafeHarbor</p>
+      </div>
+      <div class="bg-gray-50 p-6 rounded shadow">
+        <p class="italic text-gray-700">“Automated headcounts have saved us so much time each day.”</p>
+        <p class="mt-4 font-semibold">— Priya Patel, Director @ NewBeginnings</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="py-16 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-semibold mb-4">Why Gida?</h2>
+      <p class="text-gray-600">Gida simplifies shelter management by helping staff track shifts, clients, rounds, and reports—ensuring nothing gets missed, even across multiple buildings.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-16 bg-white">
+    <div class="max-w-3xl mx-auto px-4">
+      <h2 class="text-3xl font-semibold text-center mb-8">FAQ</h2>
+      <div class="space-y-4">
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">How do I register my organization?</summary>
+          <p class="mt-2 text-gray-600">
+            Simply click on “Register” at the top of the page and fill out your organization’s name and admin details. Once submitted, your unique workspace will be created automatically.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">How do staff join?</summary>
+          <p class="mt-2 text-gray-600">
+            Organization admins can send invites to staff via email. Once invited, staff can complete their setup and securely join the team workspace.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">Can we manage multiple buildings?</summary>
+          <p class="mt-2 text-gray-600">
+            Yes. Gida supports multi-building operations. Staff can switch between buildings from their dashboard to view or update location-specific data.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">Is there a separate admin view?</summary>
+          <p class="mt-2 text-gray-600">
+            Absolutely. Admins have full control to manage users, update organization settings like logos and addresses, and view activity across shifts and buildings.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">What happens at the end of a shift?</summary>
+          <p class="mt-2 text-gray-600">
+            At the end of each shift, Gida compiles the round logs, client status, passes, and any incidents into a shift report that can be saved or printed.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">Can I track client absences and passes?</summary>
+          <p class="mt-2 text-gray-600">
+            Yes. Staff can mark absences, track time out/in, and record valid passes—all of which appear in reports and client history.
+          </p>
+        </details>
+  
+        <details class="p-4 border rounded-lg">
+          <summary class="font-medium cursor-pointer">Is Gida available 24/7?</summary>
+          <p class="mt-2 text-gray-600">
+            Gida is built to support 24/7 operations across 3 daily shifts, ensuring no activity is missed and every entry is securely stored in real time.
+          </p>
+        </details>
+  
+      </div>
+    </div>
+  </section>
+  
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-sm">&copy; 2025 Gida. All rights reserved.</p>
+      <div class="space-x-4 mt-4 md:mt-0">
+        <a href="#faq" class="hover:underline">FAQ</a>
+        <a href="#about" class="hover:underline">About</a>
+        <a href="http://127.0.0.1:8000/contact/" class="hover:underline">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE MENU SCRIPT -->
+  <script>
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

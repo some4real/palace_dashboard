@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+import cloudinary
+import cloudinary_storage
+import cloudinary.api
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +31,7 @@ SECRET_KEY = 'django-insecure-t5g3ge%z7h$63t5fuensw&i5ay1)^m-xqks^(jwy9e!$-h!y&o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '192.168.1.189', '172.20.10.2']
 
 
 # Application definition
@@ -47,7 +50,9 @@ INSTALLED_APPS = [
 
     # Third-party apps
     'encrypted_model_fields',
-    
+    'cloudinary',
+    'cloudinary_storage',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
@@ -126,8 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR / 'shelter/static']
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 
 # Default primary key field type
@@ -138,6 +143,43 @@ AUTH_USER_MODEL = 'account.CustomUser'
 FIELD_ENCRYPTION_KEY = config("FIELD_ENCRYPTION_KEY")
 
 LOGIN_URL = '/account/login/'  # Redirects unauthenticated users to this URL
-LOGIN_REDIRECT_URL = '/'  # Redirects authenticated users after login
-LOGOUT_REDIRECT_URL = '/account/login/'  # Redirects users after logout
+LOGIN_REDIRECT_URL = '/dashboard/'  # Redirects authenticated users after login
+LOGOUT_REDIRECT_URL = '/'  # Redirects users after logout
+
+# Cloudinary settings
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dlhvy3thk',
+    'API_KEY': '267921747886777',
+    'API_SECRET': 'NdeMnOeMt6HL0huztrs5_mbM6NE',
+}
+
+cloudinary.config(
+    cloud_name='dlhvy3thk',
+    api_key='267921747886777',
+    api_secret='NdeMnOeMt6HL0huztrs5_mbM6NE'
+)
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'trendrives@gmail.com'
+EMAIL_HOST_PASSWORD = 'zrchzyylemdziuyx'  
+DEFAULT_FROM_EMAIL = 'trendrives@gmail.com'
+
+
+# Set session timeout 
+SESSION_COOKIE_AGE = 600  # Time in seconds
+
+# Ensure the session expires when the browser is closed
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
 

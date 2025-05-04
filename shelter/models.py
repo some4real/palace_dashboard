@@ -49,11 +49,11 @@ class Client(models.Model):
         Organization,
         on_delete=models.CASCADE,
         related_name='clients',
-        editable=False,
-        null=True,  # Allow null values temporarily
+        null=False,  # Allow null values temporarily
         blank=True  # Allow blank values temporarily
     )
     building = models.ForeignKey(Building, on_delete=models.CASCADE, null=True, blank=True, related_name='clients')
+    case_id = models.CharField(max_length=100, blank=True, null=False)
     ssn = EncryptedCharField(max_length=11, null=True, unique=True, db_index=True, blank=True)
     phone_number = models.CharField(max_length=15, db_index=True, blank=True)
     nationality = models.CharField(max_length=50, blank=True)
@@ -70,18 +70,24 @@ class Client(models.Model):
         ordering = ['last_name', 'first_name']
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.email})"
+        return f"{self.first_name} {self.last_name} ({self.email}) ({self.case_id})"
 
     def clean(self):
         if self.building and self.organization:
             if self.building.organization != self.organization:
                 raise ValidationError("Building must belong to the same organization as the client.")
 
+    @property
+    def case_id(self):
+        return self.family.case_id if self.family else None
+
 
     def save(self, *args, **kwargs):
         if self.building:
             self.organization = self.building.organization
         self.full_clean()
+        if self.family:
+            self.case_id = self.family.case_id
         super().save(*args, **kwargs)
 
 class Shift(models.Model):

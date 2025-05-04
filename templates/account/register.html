@@ -1,16 +1,51 @@
 <!--register.html-->
 
-<h1>Complete Your Registration</h1>
-<h2>Set your password</h2>
-<form method="POST">
-    {% csrf_token %}
-    {% if errors %}
-        <ul>
-            {% for error in errors %}
-                <li style="color: red;">{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
-    <input type="password" name="password" placeholder="New password" required>
-    <button type="submit">Register</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gradient-to-tr from-indigo-600 to-purple-500 min-h-screen flex items-center justify-center p-6">
+    <div class="bg-white rounded-2xl shadow-xl max-w-4xl w-full grid md:grid-cols-2">
+      <!-- Left Panel -->
+      <div class="hidden md:flex flex-col items-center justify-center bg-gradient-to-tr from-purple-600 to-indigo-600 text-white p-10 rounded-l-2xl">
+        <h2 class="text-3xl font-bold mb-4">Welcome Aboard</h2>
+        <p class="text-center">You're one step away from joining the team. Set your password to complete your registration.</p>
+      </div>
+
+      <!-- Right Panel / Form -->
+      <div class="p-8 md:p-10">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Staff Registration</h2>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Name</label>
+            <input type="text" name="name" id="name" placeholder="Enter your full name" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Email</label>
+            <input type="email" name="email" value="{{ user.email }}" disabled class="mt-1 block w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-md shadow-sm focus:outline-none" />
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700">Set Password</label>
+            <input type="password" name="password" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+          </div>
+
+          <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200">
+            Complete Registration
+          </button>
+        </form>
+
+        <p class="text-sm text-gray-500 text-center mt-6">
+          Already registered?
+          <a href="{% url 'login' %}" class="text-indigo-600 hover:underline">Log in here</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
